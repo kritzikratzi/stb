@@ -287,6 +287,9 @@
 #ifndef STB_TEXTEDIT_POSITIONTYPE
 #define STB_TEXTEDIT_POSITIONTYPE    int
 #endif
+#ifndef STB_TEXTEDIT_CHARARR_LEN
+#define STB_TEXTEDIT_CHARARR_LEN(arr,len) len
+#endif
 
 typedef struct
 {
@@ -701,7 +704,7 @@ static int stb_textedit_paste_internal(STB_TEXTEDIT_STRING *str, STB_TexteditSta
    // try to insert the characters
    if (STB_TEXTEDIT_INSERTCHARS(str, state->cursor, text, len)) {
       stb_text_makeundo_insert(state, state->cursor, len);
-      state->cursor += len;
+      state->cursor += STB_TEXTEDIT_CHARARR_LEN(text,len);
       state->has_preferred_x = 0;
       return 1;
    }
